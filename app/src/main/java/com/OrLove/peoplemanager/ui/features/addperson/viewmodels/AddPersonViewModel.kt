@@ -1,4 +1,4 @@
-package com.OrLove.peoplemanager.features.addperson.viewmodels
+package com.OrLove.peoplemanager.ui.features.addperson.viewmodels
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -116,10 +116,6 @@ class AddPersonViewModel @Inject constructor(
             }
         }
     }
-
-    // make photo or choose from gallery
-
-    // enter PIB and position (3 fields name, surname, position + photo preview)
 
     // save photo and PIB with position in room
 }

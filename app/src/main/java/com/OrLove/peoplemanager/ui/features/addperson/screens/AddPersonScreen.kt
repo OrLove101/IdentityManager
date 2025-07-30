@@ -19,9 +19,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.OrLove.peoplemanager.features.addperson.components.PeopleManagerCamera
-import com.OrLove.peoplemanager.features.addperson.viewmodels.AddPersonScreenContract
-import com.OrLove.peoplemanager.features.addperson.viewmodels.AddPersonViewModel
+import com.OrLove.peoplemanager.ui.features.addperson.components.PeopleManagerCamera
+import com.OrLove.peoplemanager.ui.features.addperson.viewmodels.AddPersonScreenContract
+import com.OrLove.peoplemanager.ui.features.addperson.viewmodels.AddPersonViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted

@@ -1,4 +1,4 @@
-package com.OrLove.peoplemanager.features.recognise_person.screens
+package com.OrLove.peoplemanager.ui.features.recognise_person.screens
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

@@ -1,4 +1,4 @@
-package com.OrLove.peoplemanager.features.main.viewmodels
+package com.OrLove.peoplemanager.ui.features.main.viewmodels
 
 interface MainScreenContract {
     data class State(

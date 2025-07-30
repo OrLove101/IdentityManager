@@ -1,4 +1,4 @@
-package com.OrLove.peoplemanager.features.addperson.viewmodels
+package com.OrLove.peoplemanager.ui.features.addperson.viewmodels
 
 import android.graphics.Bitmap
 import android.net.Uri

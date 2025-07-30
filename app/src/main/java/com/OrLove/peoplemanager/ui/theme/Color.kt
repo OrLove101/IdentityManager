@@ -1,4 +1,4 @@
-package com.OrLove.peoplemanager.theme
+package com.OrLove.peoplemanager.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

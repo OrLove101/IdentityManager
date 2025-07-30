@@ -1,4 +1,4 @@
-package com.OrLove.peoplemanager.features.addperson.components
+package com.OrLove.peoplemanager.ui.features.addperson.components
 
 import android.graphics.Bitmap
 import android.util.Log

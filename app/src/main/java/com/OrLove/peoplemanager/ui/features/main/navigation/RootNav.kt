@@ -1,4 +1,4 @@
-package com.OrLove.peoplemanager.features.main.navigation
+package com.OrLove.peoplemanager.ui.features.main.navigation
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -7,9 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.OrLove.peoplemanager.features.main.screens.MainScreen
-import com.OrLove.peoplemanager.features.recognise_person.navigation.navigateToRecognisePerson
-import com.OrLove.peoplemanager.features.recognise_person.navigation.recognisePersonScreen
+import com.OrLove.peoplemanager.ui.features.main.screens.MainScreen
+import com.OrLove.peoplemanager.ui.features.recognise_person.navigation.navigateToRecognisePerson
+import com.OrLove.peoplemanager.ui.features.recognise_person.navigation.recognisePersonScreen
 import com.orlove.addperson.navigation.addPersonScreen
 import com.orlove.addperson.navigation.navigateToAddPerson
 

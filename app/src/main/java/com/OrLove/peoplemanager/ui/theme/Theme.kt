@@ -1,4 +1,4 @@
-package com.OrLove.peoplemanager.theme
+package com.OrLove.peoplemanager.ui.theme
 
 import android.app.Activity
 import android.os.Build
