@@ -20,11 +20,19 @@ interface AddPersonScreenContract {
             val isNameValid: Boolean = true,
             val isSurnameValid: Boolean = true,
             val isPositionValid: Boolean = true,
-            val isPhotoValid: Boolean = false
+            val isPhotoValid: Boolean = true
         ) {
-            val isValid: Boolean
-                get() = isNameValid && isSurnameValid && isPositionValid && isPhotoValid
+            val isSaveAttemptAvailable: Boolean
+                get() = isNameValid && isSurnameValid && isPositionValid
         }
+
+        fun validate() = copy(
+            validation = validation.copy(
+                isNameValid = name.isNotBlank(),
+                isSurnameValid = surname.isNotBlank(),
+                isPositionValid = position.isNotBlank()
+            )
+        )
     }
 
     sealed interface Event {

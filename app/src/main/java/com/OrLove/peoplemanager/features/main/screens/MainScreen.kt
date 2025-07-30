@@ -1,4 +1,4 @@
-package com.OrLove.peoplemanager.features.main.viewmodels
+package com.OrLove.peoplemanager.features.main.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,7 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.OrLove.peoplemanager.MainViewModel
+import com.OrLove.peoplemanager.features.main.viewmodels.MainScreenContract
+import com.OrLove.peoplemanager.features.main.viewmodels.MainViewModel
 import com.OrLove.peoplemanager.utils.collectInLaunchedEffect
 import com.OrLove.peoplemanager.utils.use
 

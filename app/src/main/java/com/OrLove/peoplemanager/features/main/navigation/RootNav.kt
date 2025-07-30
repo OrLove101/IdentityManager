@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.OrLove.peoplemanager.features.main.viewmodels.MainScreen
+import com.OrLove.peoplemanager.features.main.screens.MainScreen
 import com.OrLove.peoplemanager.features.recognise_person.navigation.navigateToRecognisePerson
 import com.OrLove.peoplemanager.features.recognise_person.navigation.recognisePersonScreen
 import com.orlove.addperson.navigation.addPersonScreen
@@ -32,7 +32,6 @@ fun RootNav(modifier: Modifier = Modifier) {
             )
         }
         recognisePersonScreen()
-
         addPersonScreen(
             popBack = navController::popBackStack
         )

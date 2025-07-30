@@ -1,8 +1,7 @@
-package com.OrLove.peoplemanager
+package com.OrLove.peoplemanager.features.main.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.OrLove.peoplemanager.features.main.viewmodels.MainScreenContract
 import com.OrLove.peoplemanager.utils.UnidirectionalViewModel
 import com.OrLove.peoplemanager.utils.mvi
 import dagger.hilt.android.lifecycle.HiltViewModel

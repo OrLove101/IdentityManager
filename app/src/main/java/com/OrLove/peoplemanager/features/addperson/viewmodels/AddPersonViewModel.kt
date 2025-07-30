@@ -8,6 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.OrLove.peoplemanager.utils.UnidirectionalViewModel
 import com.OrLove.peoplemanager.utils.mvi
 import com.OrLove.peoplemanager.utils.rotate
@@ -56,7 +57,7 @@ class AddPersonViewModel @Inject constructor(
             is AddPersonScreenContract.Event.SurnameChangedEvent -> {
                 updateUiState {
                     copy(
-                        position = event.surname,
+                        surname = event.surname,
                         validation = validation.copy(
                             isSurnameValid = event.surname.isNotBlank()
                         )
@@ -65,8 +66,16 @@ class AddPersonViewModel @Inject constructor(
             }
 
             AddPersonScreenContract.Event.SaveUserClickedEvent -> {
+                updateUiState {
+                    validate()
+                }
                 // validate photo
                 // TODO
+                if (state.value.validation.isSaveAttemptAvailable) {
+                    viewModelScope.emitSideEffect(
+                        AddPersonScreenContract.Effect.PersonAddedEffect
+                    )
+                }
             }
 
             AddPersonScreenContract.Event.ClosePermissionDialog -> {

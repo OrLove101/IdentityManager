@@ -149,7 +149,7 @@ private fun ScreenFieldsContent(
         )
         Button(
             onClick = { event(AddPersonScreenContract.Event.SaveUserClickedEvent) },
-            enabled = state.validation.isValid,
+            enabled = state.validation.isSaveAttemptAvailable,
             content = { Text(text = "Save") }
         )
     }
