@@ -42,9 +42,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":feature:recognise-person"))
-    implementation(project(":feature:add-person"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -76,6 +73,14 @@ dependencies {
     // Compose Navigation
     implementation(libs.compose.navigation)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.com.google.accompanist.permissions)
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.video)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.extensions)
 }
 
 hilt {

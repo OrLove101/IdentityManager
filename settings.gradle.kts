@@ -21,7 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "PeopleManager"
 include(":app")
-include(":core")
-include(":feature")
-include(":feature:add-person")
-include(":feature:recognise-person")
