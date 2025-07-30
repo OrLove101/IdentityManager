@@ -1,0 +1,19 @@
+# content of .gitignore
+*.iml
+.gradle
+/gradle.deps
+# Kotlin
+.kotlin
+/release-notes.json
+/version_code.txt
+/.gradle/*
+/.gradle/
+/local.properties
+/.idea/*
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+/.DS_Store
+/.bitrise.secrets.yml
