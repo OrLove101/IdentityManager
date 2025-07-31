@@ -12,6 +12,9 @@ activityCompose = "1.10.1"
 composeBom = "2024.09.00"
 hilt = "2.51.1"
 hiltCompiler = "2.51.1"
+mockitoCoreVersion = "5.6.0"
+mockitoKotlinVersion = "4.0.0"
+robolectricVersion = "4.14.1"
 room = "2.6.1"
 roomCompiler = "2.6.1"
 coroutines = "1.8.1"
@@ -41,6 +44,9 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltCompiler" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCoreVersion" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlinVersion" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectricVersion" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }

@@ -102,7 +102,7 @@ class RecognitionManagerImpl(
         )
     }
 
-    private fun calculateCoreSimilarity(
+    override fun calculateCoreSimilarity(
         features1: CoreFaceFeatures,
         features2: CoreFaceFeatures
     ): Float {
@@ -128,7 +128,7 @@ class RecognitionManagerImpl(
         return if (totalWeight > 0) totalSimilarity / totalWeight else 0f
     }
 
-    private fun distance(p1: PointF, p2: PointF): Float {
+    override fun distance(p1: PointF, p2: PointF): Float {
         return sqrt((p1.x - p2.x).pow(2) + (p1.y - p2.y).pow(2))
     }
 }
