@@ -7,7 +7,9 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -129,7 +131,7 @@ private fun ScreenFieldsContent(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         GlideImage(
@@ -140,24 +142,28 @@ private fun ScreenFieldsContent(
             it.diskCacheStrategy(DiskCacheStrategy.NONE)
             it.skipMemoryCache(true)
         }
+        Spacer(modifier = Modifier.height(height = 16.dp))
         OutlinedTextField(
             value = state.name,
             onValueChange = { event(AddPersonScreenContract.Event.NameChangedEvent(it)) },
             label = { Text(text = stringResource(R.string.name_no_arg)) },
             isError = !state.validation.isNameValid
         )
+        Spacer(modifier = Modifier.height(height = 16.dp))
         OutlinedTextField(
             value = state.surname,
             onValueChange = { event(AddPersonScreenContract.Event.SurnameChangedEvent(it)) },
             label = { Text(text = stringResource(R.string.surname_no_arg)) },
             isError = !state.validation.isSurnameValid
         )
+        Spacer(modifier = Modifier.height(height = 16.dp))
         OutlinedTextField(
             value = state.position,
             onValueChange = { event(AddPersonScreenContract.Event.PositionChangedEvent(it)) },
             label = { Text(text = stringResource(R.string.position_no_arg)) },
             isError = !state.validation.isPositionValid
         )
+        Spacer(modifier = Modifier.height(height = 16.dp))
         Button(
             onClick = {
                 if (cameraPermissionState.status.isGranted) {
@@ -168,10 +174,12 @@ private fun ScreenFieldsContent(
             },
             content = { Text(text = stringResource(R.string.make_photo_with_camera)) }
         )
+        Spacer(modifier = Modifier.height(height = 16.dp))
         Button(
             onClick = { galleryLauncher.launch("image/*") },
             content = { Text(text = stringResource(R.string.select_photo_from_gallery)) }
         )
+        Spacer(modifier = Modifier.height(height = 16.dp))
         Button(
             onClick = { event(AddPersonScreenContract.Event.SaveUserClickedEvent) },
             enabled = state.validation.isSaveAttemptAvailable,

@@ -7,7 +7,9 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -18,6 +20,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.OrLove.peoplemanager.R
 import com.OrLove.peoplemanager.ui.features.addperson.components.PeopleManagerCamera
@@ -116,22 +119,27 @@ fun ScreenFieldsContent(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (identifiedPerson.name.isNotEmpty()) {
             Text(text = stringResource(R.string.name, identifiedPerson.name))
+            Spacer(modifier = Modifier.height(height = 16.dp))
         }
         if (identifiedPerson.surname.isNotEmpty()) {
             Text(text = stringResource(R.string.surname, identifiedPerson.surname))
+            Spacer(modifier = Modifier.height(height = 16.dp))
         }
         if (identifiedPerson.position.isNotEmpty()) {
             Text(text = stringResource(R.string.position, identifiedPerson.position))
+            Spacer(modifier = Modifier.height(height = 16.dp))
         }
+        Spacer(modifier = Modifier.height(height = 24.dp))
         Button(
             onClick = { galleryLauncher.launch("image/*") },
             content = { Text(text = stringResource(R.string.select_photo_from_gallery)) }
         )
+        Spacer(modifier = Modifier.height(height = 16.dp))
         Button(
             onClick = {
                 if (cameraPermissionState.status.isGranted) {
