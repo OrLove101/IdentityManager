@@ -3,8 +3,8 @@
     <string name="add_photo_warning">Add photo to save identity</string>
     <string name="ok">Ok</string>
     <string name="name">Name: %s</string>
-    <string name="surname">Surname</string>
-    <string name="position">Position</string>
+    <string name="surname">Surname: %s</string>
+    <string name="position">Position: %s</string>
     <string name="select_photo_from_gallery">Select Photo From Gallery</string>
     <string name="make_photo_to_identify_person">Make Photo to Identify Person</string>
     <string name="cant_identify_face_from_photo">Cant identify face from photo</string>
@@ -19,4 +19,7 @@
     <string name="save">Save</string>
     <string name="take_photo">Take Photo</string>
     <string name="change_camera">Change camera</string>
+    <string name="name_no_arg">Name</string>
+    <string name="surname_no_arg">Surname</string>
+    <string name="position_no_arg">Position</string>
 </resources>
