@@ -1,4 +1,7 @@
 # PeopleManager App (ML Kit)
+* MVVM + MVI
+* Бізнес логіка покрита unit тестами
+
 # Як запустити
 1. Клонуйте репозиторій: git clone https://github.com/OrLove101/IdentityManager.git
 2. Відкрийте проєкт у Android Studio.
