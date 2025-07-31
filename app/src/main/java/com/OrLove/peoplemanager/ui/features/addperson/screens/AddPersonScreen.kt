@@ -143,19 +143,19 @@ private fun ScreenFieldsContent(
         OutlinedTextField(
             value = state.name,
             onValueChange = { event(AddPersonScreenContract.Event.NameChangedEvent(it)) },
-            label = { Text("Name") },
+            label = { Text(text = stringResource(R.string.name)) },
             isError = !state.validation.isNameValid
         )
         OutlinedTextField(
             value = state.surname,
             onValueChange = { event(AddPersonScreenContract.Event.SurnameChangedEvent(it)) },
-            label = { Text("Surname") },
+            label = { Text(text = stringResource(R.string.surname)) },
             isError = !state.validation.isSurnameValid
         )
         OutlinedTextField(
             value = state.position,
             onValueChange = { event(AddPersonScreenContract.Event.PositionChangedEvent(it)) },
-            label = { Text("Position") },
+            label = { Text(text = stringResource(R.string.position)) },
             isError = !state.validation.isPositionValid
         )
         Button(

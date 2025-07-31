@@ -63,7 +63,7 @@ internal fun RecognisePersonScreen(
     if (state.isCameraPermissionDialog && cameraPermissionState.status.shouldShowRationale) {
         CameraPermissionDialog(
             onDismiss = { event(RecognisePersonScreenContract.Event.ClosePermissionDialog) },
-            actionText = "OK",
+            actionText = stringResource(R.string.ok),
             actionClick = {
                 cameraPermissionState.launchPermissionRequest()
             }
