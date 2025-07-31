@@ -118,13 +118,24 @@ class AddPersonViewModel @Inject constructor(
             is AddPersonScreenContract.Event.PhotoChangedFromCameraEvent -> {
                 viewModelScope.launch {
                     val photoUri = peopleManagerRepository
-                        .saveBitmapTemporarilyAndReturnUri(photoBitmap = event.photo)
+                        .saveBitmapTemporarilyAndReturnUri(
+                            photoBitmap = event.photo,
+                            isMadeFromBackCamera = state.value.isBackCameraActive
+                        )
                     updateUiState {
                         copy(
                             photo = photoUri,
                             isCameraOpened = false
                         )
                     }
+                }
+            }
+
+            is AddPersonScreenContract.Event.BackCameraActiveEvent -> {
+                updateUiState {
+                    copy(
+                        isBackCameraActive = event.isActive
+                    )
                 }
             }
         }

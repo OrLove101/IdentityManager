@@ -2,6 +2,7 @@ package com.OrLove.peoplemanager.ui.features.addperson.components
 
 import android.graphics.Bitmap
 import android.util.Log
+import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
@@ -22,12 +23,15 @@ import java.util.concurrent.Executors
 
 @Composable
 fun PeopleManagerCamera(
+    backCameraActive: (Boolean) -> Unit,
     makePhoto: (Bitmap) -> Unit
 ) {
     val context = LocalContext.current
     val controller = remember {
         LifecycleCameraController(context).apply {
             setEnabledUseCases(CameraController.IMAGE_CAPTURE)
+            cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+            backCameraActive(false)
         }
     }
     Box(
@@ -39,27 +43,43 @@ fun PeopleManagerCamera(
                 .fillMaxSize()
                 .align(Alignment.Center)
         )
-        Button(
-            onClick = {
-                controller.takePicture(
-                    Executors.newSingleThreadExecutor(),
-                    object : ImageCapture.OnImageCapturedCallback() {
-                        override fun onCaptureSuccess(image: ImageProxy) {
-                            super.onCaptureSuccess(image)
-                            makePhoto(image.toBitmap())
-                            image.close()
-                        }
-
-                        override fun onError(exception: ImageCaptureException) {
-                            super.onError(exception)
-                            Log.d("WaybillCamera","Couldn't save bitmap.")
-                        }
-                    }
-                )
-            },
-            content = { Text(text = "Take Photo") },
+        Column(
             modifier = Modifier.align(Alignment.BottomCenter)
-        )
+        ) {
+            Button(
+                onClick = {
+                    controller.cameraSelector =
+                        if (controller.cameraSelector == CameraSelector.DEFAULT_FRONT_CAMERA) {
+                            backCameraActive(true)
+                            CameraSelector.DEFAULT_BACK_CAMERA
+                        } else {
+                            backCameraActive(false)
+                            CameraSelector.DEFAULT_FRONT_CAMERA
+                        }
+                },
+                content = { Text(text = "Change camera") },
+            )
+            Button(
+                onClick = {
+                    controller.takePicture(
+                        Executors.newSingleThreadExecutor(),
+                        object : ImageCapture.OnImageCapturedCallback() {
+                            override fun onCaptureSuccess(image: ImageProxy) {
+                                super.onCaptureSuccess(image)
+                                makePhoto(image.toBitmap())
+                                image.close()
+                            }
+
+                            override fun onError(exception: ImageCaptureException) {
+                                super.onError(exception)
+                                Log.d("WaybillCamera", "Couldn't save bitmap.")
+                            }
+                        }
+                    )
+                },
+                content = { Text(text = "Take Photo") },
+            )
+        }
     }
 
 }

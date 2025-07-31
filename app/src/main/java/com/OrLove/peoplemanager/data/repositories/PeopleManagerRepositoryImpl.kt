@@ -9,7 +9,9 @@ import com.OrLove.peoplemanager.data.local.dao.IdentitiesDao
 import com.OrLove.peoplemanager.data.local.entity.IdentityEntity
 import com.OrLove.peoplemanager.data.managers.notification.AppNotificationManager
 import com.OrLove.peoplemanager.data.managers.recognition.RecognitionManager
+import com.OrLove.peoplemanager.ui.models.IdentifiedPerson
 import com.OrLove.peoplemanager.ui.models.toEntity
+import com.OrLove.peoplemanager.ui.models.toUi
 import com.OrLove.peoplemanager.utils.AppDispatchers
 import com.OrLove.peoplemanager.utils.Dispatcher
 import com.OrLove.peoplemanager.utils.rotate
@@ -50,11 +52,19 @@ class PeopleManagerRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveBitmapTemporarilyAndReturnUri(photoBitmap: Bitmap): Uri {
+    override suspend fun saveBitmapTemporarilyAndReturnUri(
+        photoBitmap: Bitmap,
+        isMadeFromBackCamera: Boolean
+    ): Uri {
         val uri = File(context.cacheDir, "temp_photo.jpg").apply {
             deleteOnExit()
             outputStream().use { stream ->
-                if (!photoBitmap.rotate(90F)
+                val bitmap = if (isMadeFromBackCamera) {
+                    photoBitmap.rotate(90F)
+                } else {
+                    photoBitmap.rotate(-90f)
+                }
+                if (!bitmap
                         .compress(Bitmap.CompressFormat.JPEG, 100, stream)
                 ) {
                     Log.d("AddPersonViewModel", "Failed to compress photo")
@@ -63,4 +73,40 @@ class PeopleManagerRepositoryImpl @Inject constructor(
         }.toUri()
         return uri
     }
+
+    override suspend fun identifyAndGetPersonByPhoto(
+        bitmap: Bitmap,
+        isMadeFromBackCamera: Boolean
+    ): IdentifiedPerson? {
+        return withContext(dispatcher) {
+            val photoUri = saveBitmapTemporarilyAndReturnUri(
+                photoBitmap = bitmap,
+                isMadeFromBackCamera = isMadeFromBackCamera
+            )
+            return@withContext identifyAndGetPersonByPhoto(photoUri)
+        }
+    }
+
+    override suspend fun identifyAndGetPersonByPhoto(uri: Uri): IdentifiedPerson? {
+        val faceFeaturesToCompare = recognitionManager
+            .extractCoreFeatures(uri = uri)
+        return if (faceFeaturesToCompare != null) {
+            val savedIdentities = identitiesDao.getAll()
+            savedIdentities
+                .map { identity ->
+                    identity to recognitionManager
+                        .compareFaces(identity.faceFeatures.toUi(), faceFeaturesToCompare)
+                }
+                .filter { comparisonResult -> comparisonResult.second.isTheSamePerson }
+                .maxByOrNull { it.second.similarityMeasure }
+                ?.first
+                ?.toUi()
+        } else {
+            // TODO show notification
+            Log.d(TAG, "identifyAndGetPersonByPhoto: cant identify null returned")
+            null
+        }
+    }
 }
+
+private const val TAG = "PeopleManagerRepository"

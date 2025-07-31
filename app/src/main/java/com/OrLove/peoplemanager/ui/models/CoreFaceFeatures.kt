@@ -15,3 +15,10 @@ fun CoreFaceFeatures.toEntity() = IdentityEntity.FaceFeaturesEntity(
     noseToEyesRatio = noseToEyesRatio,
     eyeToMouthRatio = eyeToMouthRatio
 )
+
+fun IdentityEntity.FaceFeaturesEntity.toUi() = CoreFaceFeatures(
+    eyeDistanceRatio = eyeDistanceRatio,
+    faceAspectRatio = faceAspectRatio,
+    noseToEyesRatio = noseToEyesRatio,
+    eyeToMouthRatio = eyeToMouthRatio
+)

@@ -3,7 +3,9 @@ package com.OrLove.peoplemanager.data.managers.recognition
 import android.content.Context
 import android.graphics.PointF
 import android.net.Uri
+import android.util.Log
 import com.OrLove.peoplemanager.ui.models.CoreFaceFeatures
+import com.OrLove.peoplemanager.ui.models.FaceComparisonResult
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceDetection
@@ -21,17 +23,20 @@ import kotlin.math.sqrt
 
 class RecognitionManagerImpl(
     @ApplicationContext private val context: Context
-): RecognitionManager {
+) : RecognitionManager {
 
     override suspend fun compareFaces(
         features1: CoreFaceFeatures,
         features2: CoreFaceFeatures
-    ): Pair<Boolean, Float> =
+    ): FaceComparisonResult =
         coroutineScope {
             val similarity = calculateCoreSimilarity(features1, features2)
             val isSamePerson = similarity > 0.80f
-
-            Pair(isSamePerson, similarity)
+            Log.d(TAG, "compareFaces: similarity=$similarity isSamePerson=$isSamePerson")
+            FaceComparisonResult(
+                isTheSamePerson = isSamePerson,
+                similarityMeasure = similarity
+            )
         }
 
     override suspend fun extractCoreFeatures(uri: Uri): CoreFaceFeatures? =
@@ -127,3 +132,5 @@ class RecognitionManagerImpl(
         return sqrt((p1.x - p2.x).pow(2) + (p1.y - p2.y).pow(2))
     }
 }
+
+private const val TAG = "RecognitionManagerImpl"

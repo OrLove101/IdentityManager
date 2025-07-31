@@ -9,6 +9,16 @@ abstract class IdentitiesDao: BaseDao<IdentityEntity>() {
 
     @Query(
         """
+            SELECT
+              *
+            FROM
+              Identity
+        """
+    )
+    abstract suspend fun getAll(): List<IdentityEntity>
+
+    @Query(
+        """
             DELETE FROM
                 Identity
         """

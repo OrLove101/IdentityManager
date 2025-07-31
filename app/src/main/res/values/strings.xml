@@ -2,4 +2,9 @@
     <string name="app_name">PeopleManager</string>
     <string name="add_photo_warning">Add photo to save identity</string>
     <string name="ok">Ok</string>
+    <string name="name">Name: %s</string>
+    <string name="surname">Surname</string>
+    <string name="position">Position</string>
+    <string name="select_photo_from_gallery">Select Photo From Gallery</string>
+    <string name="make_photo_to_identify_person">Make Photo to Identify Person</string>
 </resources>

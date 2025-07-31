@@ -15,6 +15,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,6 +31,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.OrLove.peoplemanager.utils.collectInLaunchedEffect
 import com.OrLove.peoplemanager.utils.components.CameraPermissionDialog
+import com.OrLove.peoplemanager.utils.components.ProgressLoader
 import com.OrLove.peoplemanager.utils.components.WarningDialog
 import com.OrLove.peoplemanager.utils.use
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -67,6 +70,9 @@ fun AddPersonScreen(
         }
     }
 
+    if (state.isLoading) {
+        ProgressLoader()
+    }
     if (state.isCameraPermissionDialog && cameraPermissionState.status.shouldShowRationale) {
         CameraPermissionDialog(
             onDismiss = { event(AddPersonScreenContract.Event.ClosePermissionDialog) },
@@ -93,12 +99,17 @@ fun AddPersonScreen(
                 event(
                     AddPersonScreenContract.Event.PhotoChangedFromCameraEvent(photo = photo)
                 )
+            },
+            backCameraActive = { isActive ->
+                event(
+                    AddPersonScreenContract.Event.BackCameraActiveEvent(isActive = isActive)
+                )
             }
         )
     } else {
         ScreenFieldsContent(
             state = state,
-            event = event,
+            callback = event,
             cameraPermissionState = cameraPermissionState,
             galleryLauncher = galleryLauncher
         )
@@ -109,10 +120,11 @@ fun AddPersonScreen(
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalGlideComposeApi::class)
 private fun ScreenFieldsContent(
     state: AddPersonScreenContract.State,
-    event: (AddPersonScreenContract.Event) -> Unit,
+    callback: (AddPersonScreenContract.Event) -> Unit,
     cameraPermissionState: PermissionState,
     galleryLauncher: ManagedActivityResultLauncher<String, Uri?>
 ) {
+    val event by rememberUpdatedState(callback)
     Column(
         modifier = Modifier
             .fillMaxSize()
