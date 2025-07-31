@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.OrLove.peoplemanager.R
 import com.OrLove.peoplemanager.ui.features.addperson.components.PeopleManagerCamera
 import com.OrLove.peoplemanager.ui.features.addperson.viewmodels.AddPersonScreenContract
 import com.OrLove.peoplemanager.ui.features.addperson.viewmodels.AddPersonViewModel
@@ -43,7 +44,6 @@ import com.google.accompanist.permissions.shouldShowRationale
 @Composable
 fun AddPersonScreen(
     popBack: () -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: AddPersonViewModel = hiltViewModel()
 ) {
     val (state, event, effect) = use(viewModel = viewModel)
@@ -76,7 +76,7 @@ fun AddPersonScreen(
     if (state.isCameraPermissionDialog && cameraPermissionState.status.shouldShowRationale) {
         CameraPermissionDialog(
             onDismiss = { event(AddPersonScreenContract.Event.ClosePermissionDialog) },
-            actionText = "OK",
+            actionText = stringResource(R.string.ok),
             actionClick = {
                 cameraPermissionState.launchPermissionRequest()
             }
@@ -166,16 +166,16 @@ private fun ScreenFieldsContent(
                     cameraPermissionState.launchPermissionRequest()
                 }
             },
-            content = { Text(text = "Make Photo With Camera") }
+            content = { Text(text = stringResource(R.string.make_photo_with_camera)) }
         )
         Button(
             onClick = { galleryLauncher.launch("image/*") },
-            content = { Text(text = "Select Photo From Gallery") }
+            content = { Text(text = stringResource(R.string.select_photo_from_gallery)) }
         )
         Button(
             onClick = { event(AddPersonScreenContract.Event.SaveUserClickedEvent) },
             enabled = state.validation.isSaveAttemptAvailable,
-            content = { Text(text = "Save") }
+            content = { Text(text = stringResource(R.string.save)) }
         )
     }
 }

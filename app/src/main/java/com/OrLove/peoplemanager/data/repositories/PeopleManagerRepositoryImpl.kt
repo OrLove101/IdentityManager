@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import androidx.core.net.toUri
+import com.OrLove.peoplemanager.data.NoIdentityFoundException
 import com.OrLove.peoplemanager.data.local.dao.IdentitiesDao
 import com.OrLove.peoplemanager.data.local.entity.IdentityEntity
 import com.OrLove.peoplemanager.data.managers.notification.AppNotificationManager
@@ -64,9 +65,7 @@ class PeopleManagerRepositoryImpl @Inject constructor(
                 } else {
                     photoBitmap.rotate(-90f)
                 }
-                if (!bitmap
-                        .compress(Bitmap.CompressFormat.JPEG, 100, stream)
-                ) {
+                if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)) {
                     Log.d("AddPersonViewModel", "Failed to compress photo")
                 }
             }
@@ -91,8 +90,7 @@ class PeopleManagerRepositoryImpl @Inject constructor(
         val faceFeaturesToCompare = recognitionManager
             .extractCoreFeatures(uri = uri)
         return if (faceFeaturesToCompare != null) {
-            val savedIdentities = identitiesDao.getAll()
-            savedIdentities
+            identitiesDao.getAll()
                 .map { identity ->
                     identity to recognitionManager
                         .compareFaces(identity.faceFeatures.toUi(), faceFeaturesToCompare)
@@ -101,8 +99,9 @@ class PeopleManagerRepositoryImpl @Inject constructor(
                 .maxByOrNull { it.second.similarityMeasure }
                 ?.first
                 ?.toUi()
+                ?: throw NoIdentityFoundException()
         } else {
-            // TODO show notification
+            appNotificationManager.showCantIdentifyFaceNotification()
             Log.d(TAG, "identifyAndGetPersonByPhoto: cant identify null returned")
             null
         }

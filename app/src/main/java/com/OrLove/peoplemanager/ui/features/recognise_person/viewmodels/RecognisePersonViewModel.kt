@@ -2,6 +2,8 @@ package com.OrLove.peoplemanager.ui.features.recognise_person.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.OrLove.peoplemanager.R
+import com.OrLove.peoplemanager.data.NoIdentityFoundException
 import com.OrLove.peoplemanager.data.repositories.PeopleManagerRepository
 import com.OrLove.peoplemanager.utils.UnidirectionalViewModel
 import com.OrLove.peoplemanager.utils.mvi
@@ -44,22 +46,49 @@ class RecognisePersonViewModel @Inject constructor(
                             isCameraOpened = false
                         )
                     }
-                    val identifiedPerson = peopleManagerRepository
-                        .identifyAndGetPersonByPhoto(
-                            bitmap = event.photo,
-                            isMadeFromBackCamera = state.value.isBackCameraActive
-                        )
-                    if (identifiedPerson != null) {
+                    try {
+                        val identifiedPerson = peopleManagerRepository
+                            .identifyAndGetPersonByPhoto(
+                                bitmap = event.photo,
+                                isMadeFromBackCamera = state.value.isBackCameraActive
+                            )
+                        if (identifiedPerson != null) {
+                            updateUiState {
+                                copy(
+                                    identifiedPerson = identifiedPerson
+                                )
+                            }
+                        } else {
+                            updateUiState {
+                                copy(
+                                    errorTextRes = R.string.cant_identify_face_from_photo
+                                )
+                            }
+                        }
+                    } catch (e: Exception) {
+                        when (e) {
+                            is NoIdentityFoundException -> {
+                                updateUiState {
+                                    copy(
+                                        errorTextRes = R.string.cant_find_such_identity_in_db_pleas_try_again
+                                    )
+                                }
+                            }
+
+                            else -> {
+                                updateUiState {
+                                    copy(
+                                        errorTextRes = R.string.something_went_wrong
+                                    )
+                                }
+                            }
+                        }
+                    } finally {
                         updateUiState {
                             copy(
-                                identifiedPerson = identifiedPerson
+                                isLoading = false
                             )
                         }
-                    }
-                    updateUiState {
-                        copy(
-                            isLoading = false
-                        )
                     }
                 }
 
@@ -71,19 +100,46 @@ class RecognisePersonViewModel @Inject constructor(
                             isCameraOpened = false
                         )
                     }
-                    val identifiedPerson = peopleManagerRepository
-                        .identifyAndGetPersonByPhoto(uri = event.photo)
-                    if (identifiedPerson != null) {
+                    try {
+                        val identifiedPerson = peopleManagerRepository
+                            .identifyAndGetPersonByPhoto(uri = event.photo)
+                        if (identifiedPerson != null) {
+                            updateUiState {
+                                copy(
+                                    identifiedPerson = identifiedPerson
+                                )
+                            }
+                        } else {
+                            updateUiState {
+                                copy(
+                                    errorTextRes = R.string.cant_identify_face_from_photo
+                                )
+                            }
+                        }
+                    } catch (e: Exception) {
+                        when (e) {
+                            is NoIdentityFoundException -> {
+                                updateUiState {
+                                    copy(
+                                        errorTextRes = R.string.cant_find_such_identity_in_db_pleas_try_again
+                                    )
+                                }
+                            }
+
+                            else -> {
+                                updateUiState {
+                                    copy(
+                                        errorTextRes = R.string.something_went_wrong
+                                    )
+                                }
+                            }
+                        }
+                    } finally {
                         updateUiState {
                             copy(
-                                identifiedPerson = identifiedPerson
+                                isLoading = false
                             )
                         }
-                    }
-                    updateUiState {
-                        copy(
-                            isLoading = false
-                        )
                     }
                 }
 

@@ -18,6 +18,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.OrLove.peoplemanager.R
 import com.OrLove.peoplemanager.utils.components.CameraPreview
 import java.util.concurrent.Executors
 
@@ -44,7 +46,8 @@ fun PeopleManagerCamera(
                 .align(Alignment.Center)
         )
         Column(
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier.align(Alignment.BottomCenter),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
                 onClick = {
@@ -57,7 +60,7 @@ fun PeopleManagerCamera(
                             CameraSelector.DEFAULT_FRONT_CAMERA
                         }
                 },
-                content = { Text(text = "Change camera") },
+                content = { Text(text = stringResource(R.string.change_camera)) },
             )
             Button(
                 onClick = {
@@ -77,7 +80,7 @@ fun PeopleManagerCamera(
                         }
                     )
                 },
-                content = { Text(text = "Take Photo") },
+                content = { Text(text = stringResource(R.string.take_photo)) },
             )
         }
     }

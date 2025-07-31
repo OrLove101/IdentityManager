@@ -7,4 +7,16 @@
     <string name="position">Position</string>
     <string name="select_photo_from_gallery">Select Photo From Gallery</string>
     <string name="make_photo_to_identify_person">Make Photo to Identify Person</string>
+    <string name="cant_identify_face_from_photo">Cant identify face from photo</string>
+    <string name="retake_photo">Try to make photo again</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="cant_find_such_identity_in_db_pleas_try_again">Cant find such identity in db. Please try again.</string>
+    <string name="camera_permission_is_required_to_take_a_photo_please_allow_it">Camera permission is required to take a photo. Please allow it.</string>
+    <string name="notification_permission_is_required_please_allow_it">Notification permission is required. Please allow it.</string>
+    <string name="add_person">Add Person</string>
+    <string name="recognise_person">Recognise Person</string>
+    <string name="make_photo_with_camera">Make Photo With Camera</string>
+    <string name="save">Save</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="change_camera">Change camera</string>
 </resources>

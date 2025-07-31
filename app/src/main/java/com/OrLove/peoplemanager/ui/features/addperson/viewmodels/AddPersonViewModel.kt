@@ -86,6 +86,12 @@ class AddPersonViewModel @Inject constructor(
                                 AddPersonScreenContract.Effect.PersonAddedEffect
                             )
                         }
+                    } else {
+                        updateUiState {
+                            copy(
+                                errorTextRes = R.string.cant_identify_face_from_photo
+                            )
+                        }
                     }
                 }
             }

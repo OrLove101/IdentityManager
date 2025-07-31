@@ -21,7 +21,7 @@ import androidx.compose.ui.window.Dialog
 import com.OrLove.peoplemanager.R
 
 @Composable
-fun CameraPermissionDialog(
+fun NotificationPermissionDialog(
     onDismiss: () -> Unit,
     actionText: String,
     actionClick: () -> Unit
@@ -39,7 +39,7 @@ fun CameraPermissionDialog(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = stringResource(R.string.camera_permission_is_required_to_take_a_photo_please_allow_it),
+                    text = stringResource(R.string.notification_permission_is_required_please_allow_it),
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(height = 20.dp))

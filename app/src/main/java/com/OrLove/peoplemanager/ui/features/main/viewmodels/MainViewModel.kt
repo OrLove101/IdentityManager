@@ -21,6 +21,22 @@ class MainViewModel @Inject constructor() : ViewModel(),
             MainScreenContract.Event.OnRecognisePersonClick -> viewModelScope.emitSideEffect(
                 MainScreenContract.Effect.OpenRecognisePersonScreenEffect
             )
+
+            MainScreenContract.Event.ClosePermissionDialog -> {
+                updateUiState {
+                    copy(
+                        isNotificationPermissionDialog = false
+                    )
+                }
+            }
+
+            MainScreenContract.Event.ShowCameraPermissionRationaleEvent -> {
+                updateUiState {
+                    copy(
+                        isNotificationPermissionDialog = true
+                    )
+                }
+            }
         }
     }
 }
