@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PeopleManager</string>
+    <string name="add_photo_warning">Add photo to save identity</string>
+    <string name="ok">Ok</string>
 </resources>

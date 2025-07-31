@@ -1,23 +1,18 @@
 package com.OrLove.peoplemanager.ui.features.addperson.viewmodels
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.util.Log
-import androidx.core.net.toUri
-import dagger.hilt.android.qualifiers.ApplicationContext
-import java.io.File
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.OrLove.peoplemanager.R
+import com.OrLove.peoplemanager.data.repositories.PeopleManagerRepository
 import com.OrLove.peoplemanager.utils.UnidirectionalViewModel
 import com.OrLove.peoplemanager.utils.mvi
-import com.OrLove.peoplemanager.utils.rotate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddPersonViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
+    private val peopleManagerRepository: PeopleManagerRepository
 ) : ViewModel(),
     UnidirectionalViewModel<AddPersonScreenContract.State, AddPersonScreenContract.Event, AddPersonScreenContract.Effect>
     by mvi(AddPersonScreenContract.State()) {
@@ -69,12 +64,29 @@ class AddPersonViewModel @Inject constructor(
                 updateUiState {
                     validate()
                 }
-                // validate photo
-                // TODO
-                if (state.value.validation.isSaveAttemptAvailable) {
-                    viewModelScope.emitSideEffect(
-                        AddPersonScreenContract.Effect.PersonAddedEffect
-                    )
+                viewModelScope.launch {
+                    val photoUri = state.value.photo ?: run {
+                        updateUiState {
+                            copy(
+                                errorTextRes = R.string.add_photo_warning
+                            )
+                        }
+                        return@launch
+                    }
+                    val isSuccessfullySaved = peopleManagerRepository
+                        .saveIdentifiedPerson(
+                            name = state.value.name,
+                            surname = state.value.surname,
+                            position = state.value.position,
+                            photoUri = photoUri
+                        )
+                    if (isSuccessfullySaved) {
+                        if (state.value.validation.isSaveAttemptAvailable) {
+                            emitSideEffect(
+                                AddPersonScreenContract.Effect.PersonAddedEffect
+                            )
+                        }
+                    }
                 }
             }
 
@@ -83,6 +95,13 @@ class AddPersonViewModel @Inject constructor(
                     copy(isCameraPermissionDialog = false)
                 }
             }
+
+            AddPersonScreenContract.Event.CloseWarningDialog -> {
+                updateUiState {
+                    copy(errorTextRes = null)
+                }
+            }
+
 
             AddPersonScreenContract.Event.OpenCameraEvent -> {
                 updateUiState {
@@ -97,25 +116,17 @@ class AddPersonViewModel @Inject constructor(
             }
 
             is AddPersonScreenContract.Event.PhotoChangedFromCameraEvent -> {
-                val uri = File(context.cacheDir, "temp_photo.jpg").apply {
-                    deleteOnExit()
-                    outputStream().use { stream ->
-                        if (!event.photo.rotate(90F)
-                                .compress(Bitmap.CompressFormat.JPEG, 100, stream)
-                        ) {
-                            Log.d("AddPersonViewModel", "Failed to compress photo")
-                        }
+                viewModelScope.launch {
+                    val photoUri = peopleManagerRepository
+                        .saveBitmapTemporarilyAndReturnUri(photoBitmap = event.photo)
+                    updateUiState {
+                        copy(
+                            photo = photoUri,
+                            isCameraOpened = false
+                        )
                     }
-                }.toUri()
-                updateUiState {
-                    copy(
-                        photo = uri,
-                        isCameraOpened = false
-                    )
                 }
             }
         }
     }
-
-    // save photo and PIB with position in room
 }

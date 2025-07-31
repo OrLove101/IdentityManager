@@ -45,6 +45,7 @@ interface AddPersonScreenContract {
         data object OpenCameraEvent : Event
         data object ShowCameraPermissionRationaleEvent : Event
         data object ClosePermissionDialog : Event
+        data object CloseWarningDialog : Event
     }
 
     sealed interface Effect {

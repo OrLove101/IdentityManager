@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.OrLove.peoplemanager.ui.features.addperson.components.PeopleManagerCamera
@@ -28,6 +29,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.OrLove.peoplemanager.utils.collectInLaunchedEffect
 import com.OrLove.peoplemanager.utils.components.CameraPermissionDialog
+import com.OrLove.peoplemanager.utils.components.WarningDialog
 import com.OrLove.peoplemanager.utils.use
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -72,6 +74,17 @@ fun AddPersonScreen(
             actionClick = {
                 cameraPermissionState.launchPermissionRequest()
             }
+        )
+    }
+    if (state.errorTextRes != null) {
+        WarningDialog(
+            onDismiss = {
+                event(AddPersonScreenContract.Event.CloseWarningDialog)
+            },
+            actionClick = {
+                event(AddPersonScreenContract.Event.CloseWarningDialog)
+            },
+            contentText = stringResource(state.errorTextRes)
         )
     }
     if (state.isCameraOpened) {
