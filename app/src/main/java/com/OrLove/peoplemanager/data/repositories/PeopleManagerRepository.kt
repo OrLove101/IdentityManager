@@ -12,15 +12,9 @@ interface PeopleManagerRepository {
         photoUri: Uri
     ): Boolean
 
-    suspend fun saveBitmapTemporarilyAndReturnUri(
-        photoBitmap: Bitmap,
-        isMadeFromBackCamera: Boolean
-    ): Uri
+    suspend fun saveBitmapTemporarilyAndReturnUri(photoBitmap: Bitmap): Uri
 
-    suspend fun identifyAndGetPersonByPhoto(
-        bitmap: Bitmap,
-        isMadeFromBackCamera: Boolean
-    ): IdentifiedPerson?
+    suspend fun identifyAndGetPersonByPhoto(bitmap: Bitmap): IdentifiedPerson?
 
     suspend fun identifyAndGetPersonByPhoto(uri: Uri): IdentifiedPerson?
 }

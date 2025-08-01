@@ -14,7 +14,6 @@ interface AddPersonScreenContract {
         val isCameraPermissionDialog: Boolean = false,
         @StringRes val errorTextRes: Int? = null,
         val isCameraOpened: Boolean = false,
-        val isBackCameraActive: Boolean = false,
         val validation: Validation = Validation()
     ) {
         data class Validation(
@@ -42,7 +41,6 @@ interface AddPersonScreenContract {
         data class PositionChangedEvent(val position: String) : Event
         data class PhotoChangedFromGalleryEvent(val photo: Uri) : Event
         data class PhotoChangedFromCameraEvent(val photo: Bitmap) : Event
-        data class BackCameraActiveEvent(val isActive: Boolean) : Event
         data object SaveUserClickedEvent : Event
         data object OpenCameraEvent : Event
         data object ShowCameraPermissionRationaleEvent : Event

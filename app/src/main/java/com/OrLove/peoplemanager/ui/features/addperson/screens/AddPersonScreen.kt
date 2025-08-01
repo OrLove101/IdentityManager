@@ -101,11 +101,6 @@ fun AddPersonScreen(
                 event(
                     AddPersonScreenContract.Event.PhotoChangedFromCameraEvent(photo = photo)
                 )
-            },
-            backCameraActive = { isActive ->
-                event(
-                    AddPersonScreenContract.Event.BackCameraActiveEvent(isActive = isActive)
-                )
             }
         )
     } else {

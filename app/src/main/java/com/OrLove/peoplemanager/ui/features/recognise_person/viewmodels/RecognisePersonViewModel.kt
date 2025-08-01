@@ -48,10 +48,7 @@ class RecognisePersonViewModel @Inject constructor(
                     }
                     try {
                         val identifiedPerson = peopleManagerRepository
-                            .identifyAndGetPersonByPhoto(
-                                bitmap = event.photo,
-                                isMadeFromBackCamera = state.value.isBackCameraActive
-                            )
+                            .identifyAndGetPersonByPhoto(bitmap = event.photo)
                         if (identifiedPerson != null) {
                             updateUiState {
                                 copy(
@@ -146,14 +143,6 @@ class RecognisePersonViewModel @Inject constructor(
             RecognisePersonScreenContract.Event.ShowCameraPermissionRationaleEvent -> {
                 updateUiState {
                     copy(isCameraPermissionDialog = true)
-                }
-            }
-
-            is RecognisePersonScreenContract.Event.BackCameraActiveEvent -> {
-                updateUiState {
-                    copy(
-                        isBackCameraActive = event.isActive
-                    )
                 }
             }
         }

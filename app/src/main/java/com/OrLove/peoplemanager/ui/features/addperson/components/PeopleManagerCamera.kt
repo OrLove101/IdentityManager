@@ -21,11 +21,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.OrLove.peoplemanager.R
 import com.OrLove.peoplemanager.utils.components.CameraPreview
+import com.OrLove.peoplemanager.utils.rotate
 import java.util.concurrent.Executors
 
 @Composable
 fun PeopleManagerCamera(
-    backCameraActive: (Boolean) -> Unit,
     makePhoto: (Bitmap) -> Unit
 ) {
     val context = LocalContext.current
@@ -33,7 +33,6 @@ fun PeopleManagerCamera(
         LifecycleCameraController(context).apply {
             setEnabledUseCases(CameraController.IMAGE_CAPTURE)
             cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
-            backCameraActive(false)
         }
     }
     Box(
@@ -53,10 +52,8 @@ fun PeopleManagerCamera(
                 onClick = {
                     controller.cameraSelector =
                         if (controller.cameraSelector == CameraSelector.DEFAULT_FRONT_CAMERA) {
-                            backCameraActive(true)
                             CameraSelector.DEFAULT_BACK_CAMERA
                         } else {
-                            backCameraActive(false)
                             CameraSelector.DEFAULT_FRONT_CAMERA
                         }
                 },
@@ -69,7 +66,8 @@ fun PeopleManagerCamera(
                         object : ImageCapture.OnImageCapturedCallback() {
                             override fun onCaptureSuccess(image: ImageProxy) {
                                 super.onCaptureSuccess(image)
-                                makePhoto(image.toBitmap())
+                                image.toBitmap().rotate(image.imageInfo.rotationDegrees.toFloat())
+                                    .let { makePhoto(it) }
                                 image.close()
                             }
 

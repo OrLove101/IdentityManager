@@ -89,11 +89,6 @@ internal fun RecognisePersonScreen(
                 event(
                     RecognisePersonScreenContract.Event.PhotoChangedFromCameraEvent(photo = photo)
                 )
-            },
-            backCameraActive = { isActive ->
-                event(
-                    RecognisePersonScreenContract.Event.BackCameraActiveEvent(isActive = isActive)
-                )
             }
         )
     } else {

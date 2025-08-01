@@ -11,8 +11,7 @@ interface RecognisePersonScreenContract {
         val identifiedPerson: IdentifiedPerson = IdentifiedPerson(),
         val isCameraPermissionDialog: Boolean = false,
         @StringRes val errorTextRes: Int? = null,
-        val isCameraOpened: Boolean = false,
-        val isBackCameraActive: Boolean = false
+        val isCameraOpened: Boolean = false
     )
 
     sealed interface Event {
@@ -22,7 +21,6 @@ interface RecognisePersonScreenContract {
         data object ShowCameraPermissionRationaleEvent : Event
         data object ClosePermissionDialog : Event
         data object CloseWarningDialog : Event
-        data class BackCameraActiveEvent(val isActive: Boolean) : Event
     }
 
     sealed interface Effect

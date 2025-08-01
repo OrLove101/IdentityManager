@@ -15,7 +15,6 @@ import com.OrLove.peoplemanager.ui.models.toEntity
 import com.OrLove.peoplemanager.ui.models.toUi
 import com.OrLove.peoplemanager.utils.AppDispatchers
 import com.OrLove.peoplemanager.utils.Dispatcher
-import com.OrLove.peoplemanager.utils.rotate
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -54,18 +53,12 @@ class PeopleManagerRepositoryImpl @Inject constructor(
     }
 
     override suspend fun saveBitmapTemporarilyAndReturnUri(
-        photoBitmap: Bitmap,
-        isMadeFromBackCamera: Boolean
+        photoBitmap: Bitmap
     ): Uri {
         val uri = File(context.cacheDir, "temp_photo.jpg").apply {
             deleteOnExit()
             outputStream().use { stream ->
-                val bitmap = if (isMadeFromBackCamera) {
-                    photoBitmap.rotate(90F)
-                } else {
-                    photoBitmap.rotate(-90f)
-                }
-                if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)) {
+                if (!photoBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)) {
                     Log.d("AddPersonViewModel", "Failed to compress photo")
                 }
             }
@@ -73,15 +66,9 @@ class PeopleManagerRepositoryImpl @Inject constructor(
         return uri
     }
 
-    override suspend fun identifyAndGetPersonByPhoto(
-        bitmap: Bitmap,
-        isMadeFromBackCamera: Boolean
-    ): IdentifiedPerson? {
+    override suspend fun identifyAndGetPersonByPhoto(bitmap: Bitmap): IdentifiedPerson? {
         return withContext(dispatcher) {
-            val photoUri = saveBitmapTemporarilyAndReturnUri(
-                photoBitmap = bitmap,
-                isMadeFromBackCamera = isMadeFromBackCamera
-            )
+            val photoUri = saveBitmapTemporarilyAndReturnUri(photoBitmap = bitmap)
             return@withContext identifyAndGetPersonByPhoto(photoUri)
         }
     }
