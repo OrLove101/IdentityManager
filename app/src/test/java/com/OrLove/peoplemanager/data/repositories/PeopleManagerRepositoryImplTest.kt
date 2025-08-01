@@ -94,18 +94,17 @@ class PeopleManagerRepositoryImplTest {
         val expectedPerson = mockk<IdentifiedPerson>()
         val repository = spyk(this@PeopleManagerRepositoryImplTest.repository)
         coEvery {
-            repository.saveBitmapTemporarilyAndReturnUri(mockBitmap, true)
+            repository.saveBitmapTemporarilyAndReturnUri(mockBitmap)
         } returns mockUri
         coEvery {
             repository.identifyAndGetPersonByPhoto(mockUri)
         } returns expectedPerson
         val result = repository.identifyAndGetPersonByPhoto(
-            bitmap = mockBitmap,
-            isMadeFromBackCamera = true
+            bitmap = mockBitmap
         )
         assertEquals(expectedPerson, result)
         coVerify {
-            repository.saveBitmapTemporarilyAndReturnUri(mockBitmap, true)
+            repository.saveBitmapTemporarilyAndReturnUri(mockBitmap)
             repository.identifyAndGetPersonByPhoto(mockUri)
         }
     }
